@@ -8,10 +8,6 @@
 import UIKit
 
 class Utilities {
-    class func setIcon(_ icon: Constants.Icon) -> UIImage {
-        return UIImage(named: icon.rawValue) ?? UIImage()
-    }
-    
     class func setDate(_ dateString: String?, with format: String) -> String {
         var dateStr = dateString ?? ""
         let dateFormatter = DateFormatter()
@@ -21,5 +17,10 @@ class Utilities {
             dateStr = dateFormatter.string(from: date)
         }
         return dateStr
+    }
+    
+    class func openURL(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        UIApplication.shared.open(url)
     }
 }

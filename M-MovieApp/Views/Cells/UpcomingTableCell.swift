@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class UpcomingTableCell: UITableViewCell {
     
@@ -48,7 +47,7 @@ class UpcomingTableCell: UITableViewCell {
     lazy private var rightArrowImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
-        image.image = Utilities.setIcon(.arrow_icon)
+        image.image = UIImage.setIcon(.arrow_icon)
         return image
     }()
     
@@ -88,6 +87,7 @@ class UpcomingTableCell: UITableViewCell {
     }
     
     private func setupViews() {
+        self.selectionStyle = .none
         self.backgroundColor = .clear
         self.addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -131,7 +131,7 @@ class UpcomingTableCell: UITableViewCell {
     
     private func updateUI(_ posterPath: String?, _ title: String?, _ description: String?, _ dateString: String?) {
         if let posterPath = posterPath {
-            let urlString = Service.type.image(posterPath).url
+            let urlString = Service.type.image(posterPath, .w500).url
             if let url = URL(string: urlString) {
                 poster.kf.setImage(with: url)
             }

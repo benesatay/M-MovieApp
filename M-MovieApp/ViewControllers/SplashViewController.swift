@@ -12,11 +12,17 @@ class SplashViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
-        let destination = MovieListViewController()
-        push(to: destination)
+        self.checkInternetConnection()
     }
     
-    
-   
+    private func checkInternetConnection() {
+        NetworkManager.shared.checkInternetConnection {
+            let destination = MovieListViewController()
+            NetworkManager.shared.cancelMonitoring()
+            self.push(to: destination)
+        } onError: { error in
+            NetworkManager.shared.cancelMonitoring()
+            self.presentAlert(with: error)
+        }
+    }
 }

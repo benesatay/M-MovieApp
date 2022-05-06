@@ -5,11 +5,25 @@
 //  Created by Bahadır Enes Atay on 5.05.2022.
 //
 
-import Foundation
 import UIKit
 import SnapKit
+import Kingfisher
 
 class BaseViewController: UIViewController {
+    
+    public var navigationBarHeight: CGFloat {
+        return navigationController?.navigationBar.frame.height ?? 0
+    }
+    
+    public var topSafeAreaHeight: CGFloat {
+        let keyWindow = UIApplication.shared.connectedScenes.filter({$0.activationState == .foregroundActive})
+            .map({$0 as? UIWindowScene}).compactMap({$0}).first?.windows.filter({$0.isKeyWindow}).first
+        return (keyWindow?.safeAreaInsets.top ?? 0)
+    }
+    
+    public var topHeight: CGFloat {
+        return topSafeAreaHeight + navigationBarHeight
+    }
     
     lazy private var scrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -18,10 +32,14 @@ class BaseViewController: UIViewController {
         return scroll
     }()
     
-    lazy private var contentView = UIView()
+    lazy private var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
     
     lazy private var indicator: UIActivityIndicatorView = {
-       let indicator = UIActivityIndicatorView()
+        let indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
         indicator.style = .medium
         indicator.color = .black
@@ -45,7 +63,6 @@ class BaseViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
         
-        contentView.backgroundColor = .white
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
@@ -69,6 +86,10 @@ class BaseViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    public func backPreviousController() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     public func presentAlert(with message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "Ok", style: .cancel)
@@ -83,7 +104,8 @@ class BaseViewController: UIViewController {
     public func hideIndicator() {
         indicator.stopAnimating()
     }
-
+    
+    
 }
 
 extension BaseViewController: UIScrollViewDelegate {

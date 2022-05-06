@@ -31,12 +31,6 @@ class Constants {
         static let darkGray = UIColor(red: 173/255, green: 181/255, blue: 189/255, alpha: 1)
         static let darkYellow = UIColor(red: 230/255, green: 185/255, blue: 30/255, alpha: 1)
     }
-
-    enum LetterSpacing {
-        static let small = -0.24
-        static let medium = -0.08
-        static let normal = 0.38
-    }
     
     enum Font {
         case bold(CGFloat)
@@ -60,7 +54,20 @@ class Constants {
     
     enum StringFormat {
         static let titleFormatWithDate = "%@ (%@)"
-
     }
-
+    
+    enum Error {
+        case noNetwork
+        
+        var message: String {
+            switch self {
+            case .noNetwork:
+                return "Check your internet connection!"
+            }
+        }
+    }
+    
+    enum Text: String {
+        case internetConnectionMonitor = "InternetConnectionMonitor"
+    }
 }

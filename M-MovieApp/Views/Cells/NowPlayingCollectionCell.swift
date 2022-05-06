@@ -18,6 +18,7 @@ class NowPlayingCollectionCell: UICollectionViewCell {
     
     lazy private var titleLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.font = Constants.Font.bold(20).font
         label.textColor = .white
         return label
@@ -26,7 +27,7 @@ class NowPlayingCollectionCell: UICollectionViewCell {
     lazy private var overviewLabel: UILabel = {
         let label = UILabel()
         label.font = Constants.Font.medium(12).font
-        label.numberOfLines = 0
+        label.numberOfLines = 4
         label.textColor = .white
         return label
     }()
@@ -79,7 +80,7 @@ class NowPlayingCollectionCell: UICollectionViewCell {
     
     private func updateUI(_ posterPath: String?, _ title: String?, _ dateString: String?, _ overview: String?) {
         if let posterPath = posterPath {
-            let urlString = Service.type.image(posterPath).url
+            let urlString = Service.type.image(posterPath, .original).url
             if let url = URL(string: urlString) {
                 poster.kf.setImage(with: url)
             }

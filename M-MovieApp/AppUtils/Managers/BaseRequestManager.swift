@@ -19,12 +19,4 @@ class BaseRequestManager {
             }
         })
     }
-    
-    class func requestImage(_ type: Service.type, completion: @escaping() -> Void) {
-        guard let url = URL(string: type.url) else { return }
-        AF.request(url, method: .get).response(completionHandler: { data in
-            let x = data
-            completion()
-        })
-    }
 }
